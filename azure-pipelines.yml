@@ -18,9 +18,10 @@ steps:
 
 - task: Docker@2
   inputs:
-    containerRegistry: '<nombre-del-registro-de-contenedores>'
-    repository: '<nombre-del-repositorio>'
+    containerRegistry: 'nombre-del-registro-de-contenedores'
+    repository: 'nombre-del-repositorio'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
     tags: |
       $(Build.BuildId)
+  displayName: 'Construir y subir imagen Docker'
