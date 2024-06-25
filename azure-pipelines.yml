@@ -1,0 +1,26 @@
+trigger:
+- trunk
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '14.x'
+  displayName: 'Instalar Node.js'
+
+- script: |
+    npm install
+    npm run build
+    npm test
+  displayName: 'Instalar dependencias, compilar y probar'
+
+- task: Docker@2
+  inputs:
+    containerRegistry: '<nombre-del-registro-de-contenedores>'
+    repository: '<nombre-del-repositorio>'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
+    tags: |
+      $(Build.BuildId)
